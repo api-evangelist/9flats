@@ -1,0 +1,28 @@
+generated: '2026-09-05'
+method: searched
+source: >-
+  https://github.com/9flats/nineflats-api (first-party SDK);
+  http://9flats.github.com/api_docs/ (404 — the provider's reference is withdrawn)
+description: >-
+  9flats publishes no rate-limit documentation. The reference site that would
+  have carried it has been deleted, and the SDK implements no backoff, no
+  Retry-After handling and no rate-limit header parsing — it never inspects the
+  HTTP status at all. Limits could not be observed on a live response either:
+  every request to a 9flats host is answered by a Cloudflare managed challenge
+  (403) before it reaches the origin.
+limit_count: 0
+limits: []
+response_headers: []
+exhaustion_status: null
+retry_after: false
+evidence:
+  - url: https://9flats.github.io/api_docs/
+    status: 404
+    note: The documented home of the API reference; deleted.
+  - url: https://www.9flats.com/api/v1/places
+    status: 403
+    note: "Cloudflare managed challenge (cf-mitigated: challenge) — not the origin's answer."
+note: >-
+  An honest zero. This records that no limit is published, NOT that the API is
+  unlimited. An integrator has no runtime signal to work from: no X-RateLimit-*,
+  no RateLimit-*, no Retry-After documented or handled.

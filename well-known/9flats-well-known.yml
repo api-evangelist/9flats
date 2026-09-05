@@ -1,0 +1,96 @@
+generated: '2026-09-05'
+method: probed
+source: >-
+  Direct HTTPS probes of the named /.well-known/ paths on every host the record
+  knows, run 2026-09-05 with a desktop-browser User-Agent.
+description: >-
+  NO DOCUMENT WAS RETRIEVED, AND NO ABSENCE WAS ESTABLISHED EITHER. Every 9flats
+  host that exists is proxied by Cloudflare with a managed challenge in front of
+  it: each path below answered HTTP 403 with `cf-mitigated: challenge` and a
+  "Just a moment..." interstitial body, for the site root as much as for
+  /.well-known/. The 403s are therefore the edge answering, not the origin — they
+  are NOT evidence that 9flats does or does not serve these documents. We do not
+  evade challenges, so this surface is unmeasured. No WellKnown or SecurityTxt
+  pointer is emitted, because nothing was served.
+hosts:
+  - host: https://www.9flats.com
+    note: Cloudflare managed challenge on every path, including /.
+    documents:
+      - path: /.well-known/security.txt
+        status: 403
+      - path: /.well-known/openid-configuration
+        status: 403
+      - path: /.well-known/oauth-authorization-server
+        status: 403
+      - path: /.well-known/oauth-protected-resource
+        status: 403
+      - path: /.well-known/api-catalog
+        status: 403
+      - path: /.well-known/ai-plugin.json
+        status: 403
+      - path: /.well-known/agent-card.json
+        status: 403
+      - path: /.well-known/agent.json
+        status: 403
+  - host: https://9flats.com
+    note: Cloudflare managed challenge on every path.
+    documents:
+      - path: /.well-known/security.txt
+        status: 403
+      - path: /.well-known/openid-configuration
+        status: 403
+      - path: /.well-known/oauth-authorization-server
+        status: 403
+      - path: /.well-known/oauth-protected-resource
+        status: 403
+      - path: /.well-known/api-catalog
+        status: 403
+      - path: /.well-known/ai-plugin.json
+        status: 403
+      - path: /.well-known/agent-card.json
+        status: 403
+      - path: /.well-known/agent.json
+        status: 403
+  - host: https://api.9flats.com
+    note: >-
+      A real, explicitly-declared host — the wildcard *.9flats.com record resolves
+      to 195.201.174.168 (an Apache catch-all), while api.9flats.com resolves to
+      Cloudflare (104.21.76.166 / 172.67.197.123), the same as the apex and www.
+      Also behind the managed challenge.
+    documents:
+      - path: /.well-known/security.txt
+        status: 403
+      - path: /.well-known/openid-configuration
+        status: 403
+      - path: /.well-known/oauth-authorization-server
+        status: 403
+      - path: /.well-known/oauth-protected-resource
+        status: 403
+      - path: /.well-known/api-catalog
+        status: 403
+      - path: /.well-known/ai-plugin.json
+        status: 403
+      - path: /.well-known/agent-card.json
+        status: 403
+      - path: /.well-known/agent.json
+        status: 403
+control_probe:
+  description: >-
+    Subdomain control, to stop a wildcard catch-all being read as a live developer
+    surface. developer.9flats.com, partners.9flats.com and help.9flats.com all
+    resolve to 195.201.174.168 and return an Apache "403 Forbidden" — and so does
+    nonexistent-xyz.9flats.com, which cannot exist. Those three hostnames are the
+    wildcard, not developer properties.
+  probes:
+    - url: https://developer.9flats.com/
+      status: 403
+      body: Apache 403 Forbidden
+    - url: https://partners.9flats.com/
+      status: 403
+      body: Apache 403 Forbidden
+    - url: https://help.9flats.com/
+      status: 403
+      body: Apache 403 Forbidden
+    - url: https://nonexistent-xyz.9flats.com/
+      status: 403
+      body: Apache 403 Forbidden (control — proves the wildcard)

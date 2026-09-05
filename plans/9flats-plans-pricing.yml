@@ -1,0 +1,30 @@
+generated: '2026-09-05'
+method: searched
+source: >-
+  https://github.com/9flats/nineflats-api; http://9flats.github.com/api_docs/ (404);
+  https://www.9flats.com/ (403, Cloudflare managed challenge)
+description: >-
+  No API plans, tiers or developer pricing were found. 9flats is a consumer
+  vacation-rental marketplace: its public pricing is nightly rates for
+  accommodation, set per listing, not a developer product with metered tiers. The
+  API it did publish was a partner/affiliate-style read API gated by an issued
+  OAuth consumer key, with the key request handled by email (api@9flats.com) —
+  there was never a published price list for it, and the page that would carry
+  one no longer exists.
+plan_count: 0
+plans: []
+access_model:
+  type: request-a-key
+  contact: api@9flats.com
+  evidence: >-
+    github.com/9flats/nineflats-api README — "If you would like to maintain it
+    please contact api@9flats.com"; the SDK is constructed with
+    Client.connect(api_key, api_secret), credentials the provider issues.
+evidence:
+  - url: https://9flats.github.io/api_docs/
+    status: 404
+  - url: https://www.9flats.com/
+    status: 403
+    note: Cloudflare managed challenge; the marketing site could not be read by a non-browser client.
+note: >-
+  plan_count 0 means "checked, nothing published" — not "not checked".

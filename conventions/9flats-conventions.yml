@@ -1,0 +1,125 @@
+generated: '2026-09-05'
+method: derived
+source: >-
+  https://github.com/9flats/nineflats-api (first-party SDK, v0.0.9) — specifically
+  lib/nineflats-api/requests.rb, paginated_array.rb, base.rb, errors.rb,
+  query_string_normalizer.rb. No documentation site remains:
+  http://9flats.github.com/api_docs/ (the URL the gem and gemspec both point at)
+  returns 404.
+description: >-
+  Cross-cutting runtime semantics of the 9flats API v1, derived from the
+  provider's own client library because the provider's reference documentation has
+  been withdrawn. Everything below is a behaviour the SDK actually implements; no
+  convention is asserted that the code does not show.
+auth_style:
+  scheme: OAuth 1.0a, signature in the Authorization header
+  extra: client_id query parameter (the consumer key) on every request
+  see: authentication/9flats-authentication.yml
+base_url: https://www.9flats.com/api/v1
+media_type: application/json
+pagination:
+  style: page-number
+  request_params:
+    - name: search[...]
+      note: >-
+        Search criteria are serialised as bracketed nested params by
+        QueryStringNormalizer (e.g. search[query]=Berlin&search[number_of_beds]=4)
+        and sorted alphabetically before signing.
+  response_fields:
+    - total_entries
+    - total_pages
+    - current_page
+    - per_page
+  default_page_size: 9
+  next_page:
+    style: hypermedia link relation
+    location: links[] on the collection response
+    relations:
+      - self
+      - full
+      - next_page
+    note: >-
+      The SDK follows next_page by requesting the absolute href verbatim
+      (Client.places(url: next_page_url)) rather than incrementing a page number,
+      so the link relations are the supported pagination contract.
+hypermedia:
+  present: true
+  shape: >-
+    Collection and item responses carry a links[] array of {rel, href} objects;
+    Base.object_link(name, array) selects by rel. Place and Booking both expose
+    links; User exposes self_url / favorites_url / full_url.
+  note: A links[] + rel convention, not HAL, JSON:API or Siren.
+envelope:
+  collections: >-
+    Top-level key named for the collection — {"places": [...], "total_entries": n,
+    "links": [...]} , {"reviews": [...]}, {"place_photos": [...]}, {"bookings": [...]}.
+  items: >-
+    Single objects are wrapped in a one-key object named for the type — the SDK
+    reads them as json.first[1] for Place, Photo, Review, Booking and Season.
+error_envelope:
+  shape: '{"error": <message>}'
+  detection: >-
+    The SDK treats a response as an error when the expected collection key is
+    absent, then raises Nineflats::Error.new(json["error"]).
+  rfc9457: false
+  status_code_driven: false
+  note: >-
+    Errors are signalled in the body, not by an inspected HTTP status — the client
+    never reads response.code. No error code registry is published, so no
+    errors/ catalog is emitted rather than an invented one.
+idempotency:
+  coverage: none
+  mechanism: null
+  header: null
+  scope: []
+  note: >-
+    No replay-protection mechanism exists and none is needed on the surface that
+    is documented: every one of the nine operations the SDK implements is a GET.
+    Recorded as `none` rather than `na` because 9flats plainly operates a booking
+    write path in its own product; it is simply not part of any published API
+    contract we can reach.
+reversibility:
+  state: na
+  reason: >-
+    The published/derivable API surface is read-only — search, place detail,
+    photos, prices, reviews, calendar, user, favourites, bookings list, all GET.
+    There is no create, update, cancel or refund operation to reverse, so no
+    reversal path and no window can be recorded.
+  windows: []
+  caveat: >-
+    Never read this as "9flats bookings are irreversible". It means the company
+    publishes no write API, so the question does not arise for an integrator.
+dry_run_mode:
+  state: na
+  reason: No write surface.
+versioning:
+  style: path segment
+  current: v1
+  evidence: All SDK paths are /api/v1/...
+  other_versions:
+    - version: v3
+      evidence: >-
+        The provider's removed documentation site published a v3 reference (page
+        title "Show place - 9flats API Documentation - v3", endpoint
+        GET https://www.9flats.com/api/v3/places/). The page is gone
+        (9flats.github.io/api_docs/v3/show_place.html -> 404) and the live host is
+        challenge-walled, so v3's conventions are unknown and not described here.
+  see: lifecycle/9flats-lifecycle.yml
+rate_limit_signaling:
+  documented: false
+  headers: []
+  see: rate-limits/9flats-rate-limits.yml
+request_id_tracing:
+  documented: false
+localisation:
+  parameter: lang
+  applies_to: GET /api/v1/places/{slug}
+  evidence: requests.rb sets params[:lang] from options[:language]
+  related_field: content_language on a place, language on a review
+caching:
+  note: >-
+    The SDK memoises prices, reviews and photos per Place instance and
+    deliberately does not cache the calendar ("Except for the calendar, all data
+    is cached." — repository README). This is client-side behaviour, not a
+    server cache-control contract; no Cache-Control or ETag handling exists in
+    the client.

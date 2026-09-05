@@ -1,0 +1,94 @@
+generated: '2026-09-05'
+method: searched
+source: >-
+  https://github.com/9flats/nineflats-api (README + release history),
+  https://rubygems.org/api/v1/versions/nineflats-api.json,
+  https://9flats.github.io/api_docs/ (404),
+  https://api.github.com/repos/9flats/api_docs (404)
+description: >-
+  The lifecycle finding for 9flats is decay, and it is documented by the provider
+  itself. 9flats shipped a public API (v1, later v3), a Ruby SDK and a GitHub
+  Pages reference site. The reference site has been deleted, the SDK has been
+  publicly marked unsupported by its maintainers, and no successor developer
+  surface has been published. There is no versioning policy, no deprecation
+  policy, no SLA and no status page to record.
+versioning:
+  scheme: path segment
+  observed_versions:
+    - version: v1
+      base: https://www.9flats.com/api/v1
+      evidence: >-
+        Every path in the first-party SDK (github.com/9flats/nineflats-api,
+        lib/nineflats-api/requests.rb).
+      client_support: withdrawn — see deprecation below
+    - version: v3
+      base: https://www.9flats.com/api/v3
+      evidence: >-
+        The provider's own documentation site published a v3 reference page
+        titled "Show place - 9flats API Documentation - v3" documenting
+        GET https://www.9flats.com/api/v3/places/. That page
+        (9flats.github.io/api_docs/v3/show_place.html) now returns 404.
+      client_support: none — no SDK targets v3
+  policy_url: null
+  policy_published: false
+  note: No v2 was ever observed. Nothing states how versions are introduced or retired.
+deprecation:
+  policy_url: null
+  policy_published: false
+  sunset_header: unknown
+  rfc8594: false
+  provider_statements:
+    - subject: nineflats-api Ruby SDK
+      statement: >-
+        "This gem is no longer supported and only usefull for v1. If you would
+        like to maintain it please contact api@9flats.com"
+      source: https://github.com/9flats/nineflats-api/blob/master/README.md
+      date_observed: '2026-09-05'
+      note: >-
+        This is an SDK support notice from the provider, not an API deprecation
+        policy — it says the client is unmaintained and that v1 is what it speaks.
+        No `Deprecation` pointer is emitted, because no deprecation policy exists.
+  documentation_withdrawn:
+    url: http://9flats.github.com/api_docs/
+    status: 404
+    note: >-
+      The URL the gemspec's homepage_uri and the README both point at. The backing
+      repository (9flats/api_docs) is also gone —
+      https://api.github.com/repos/9flats/api_docs returns 404. The reference for
+      both v1 and v3 is therefore unpublished; the only surviving first-party
+      description of the API is the SDK source.
+sla:
+  url: null
+  public_uptime_target: null
+  note: No API service-level commitment published.
+status_page:
+  url: null
+  note: >-
+    No status page found. status.9flats.com does not exist as a distinct host —
+    every *.9flats.com name that is not explicitly declared resolves to a wildcard
+    Apache catch-all returning 403 (control-probed; see
+    well-known/9flats-well-known.yml).
+release_history:
+  registry: rubygems
+  package: nineflats-api
+  latest: 0.0.9
+  latest_published: '2011-11-07'
+  releases_observed:
+    - {version: 0.0.9, date: '2011-11-07'}
+    - {version: 0.0.8, date: '2011-11-03'}
+    - {version: 0.0.7, date: '2011-11-03'}
+    - {version: 0.0.6, date: '2011-11-02'}
+    - {version: 0.0.5, date: '2011-11-02'}
+  note: >-
+    Nine releases inside roughly two weeks in late 2011, then nothing. The
+    repository's last push was 2012-03-28.
+github_org:
+  url: https://github.com/9flats
+  status: 200
+  public_repos: 13
+  latest_push: '2018-06-26'
+  note: >-
+    The organisation is alive but is a library-fork estate — twelve of the
+    thirteen repositories are forks of third-party Ruby gems used internally.
+    nineflats-api is the only product artifact.
+contact: api@9flats.com

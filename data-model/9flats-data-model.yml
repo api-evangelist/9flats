@@ -1,0 +1,175 @@
+generated: '2026-09-05'
+method: derived
+source: >-
+  https://github.com/9flats/nineflats-api (first-party SDK v0.0.9) —
+  lib/nineflats-api/{place,user,booking,review,photo,prices,season,calendar}.rb.
+  Field names are the JSON keys the SDK reads off the wire, not Ruby-side
+  inventions.
+description: >-
+  The 9flats API v1 entity graph. Derived from the provider's own client library:
+  each class below maps one-to-one onto a JSON object the API returns, and each
+  attribute is a key the SDK reads. Because the provider's reference
+  documentation has been withdrawn (9flats.github.com/api_docs -> 404), this is
+  reconstructed from code rather than from an object reference or an OpenAPI
+  components/schemas block; types are therefore not asserted, only field names.
+identifiers:
+  style: human-readable slug
+  examples:
+    - 'place: schner-wohnen-im-belgischen'
+    - 'user: jana-k-1'
+  note: >-
+    Places and users are addressed by slug in the path, not by an opaque or
+    prefixed id. No id-prefix scheme (Stripe-style) exists.
+entities:
+  - name: Place
+    description: A listed apartment or property — the central entity.
+    path: /api/v1/places/{slug}
+    fields:
+      - slug
+      - name
+      - description
+      - city
+      - district
+      - country
+      - zipcode
+      - lat
+      - lng
+      - place_type
+      - category
+      - size
+      - number_of_beds
+      - number_of_bedrooms
+      - number_of_bathrooms
+      - bed_type
+      - bathroom_type
+      - minimum_nights
+      - maximum_nights
+      - house_rules
+      - pets_around
+      - amenities_list
+      - cleaning_fee
+      - charge_per_extra_person
+      - charge_per_extra_person_limit
+      - price
+      - currency
+      - favorites_count
+      - featured_photo_url
+      - content_language
+      - host
+      - links
+  - name: User
+    description: A 9flats member — both hosts and guests are Users.
+    path: /api/v1/users/{user_id}
+    fields:
+      - slug
+      - name
+      - user_photo_url
+      - self_url
+      - favorites_url
+      - full_url
+  - name: Booking
+    description: A stay. Read-only in the API; returned only for the authenticated user.
+    path: /api/v1/users/{user_id}/bookings
+    fields:
+      - checkin_date
+      - checkout_date
+      - nights
+      - number_of_guests
+      - status
+      - host
+      - place
+      - links
+  - name: Review
+    description: A two-sided review — text about the guest and text about the place.
+    path: /api/v1/places/{slug}/reviews
+    fields:
+      - user_text
+      - place_text
+      - place_stars
+      - language
+  - name: Photo
+    description: A photo of a place.
+    path: /api/v1/places/{slug}/photos
+    fields:
+      - title
+      - caption
+      - url
+  - name: Prices
+    description: The price sheet for a place, including seasonal overrides.
+    path: /api/v1/places/{slug}/prices
+    fields:
+      - currency
+      - default_price
+      - weekend_night_price
+      - weekly_discount_in_percent
+      - monthly_discount_in_percent
+      - seasons
+  - name: Season
+    description: A dated price override inside a place's price sheet. Embedded, not addressable.
+    fields:
+      - from
+      - to
+      - price
+      - weekend_night_price
+  - name: Calendar
+    description: Availability for one place for one month. Explicitly not cached by the SDK.
+    path: /api/v1/places/{slug}/calendar/{year}/{month}
+    fields:
+      - year
+      - month
+      - days
+relationships:
+  - from: Place
+    to: User
+    kind: belongs_to
+    via: host
+    note: Embedded as a nested user object on the place, not a reference id.
+  - from: Place
+    to: Photo
+    kind: has_many
+    via: /api/v1/places/{slug}/photos
+  - from: Place
+    to: Review
+    kind: has_many
+    via: /api/v1/places/{slug}/reviews
+  - from: Place
+    to: Prices
+    kind: has_one
+    via: /api/v1/places/{slug}/prices
+  - from: Place
+    to: Calendar
+    kind: has_many
+    via: /api/v1/places/{slug}/calendar/{year}/{month}
+    note: One Calendar per year+month; not a collection resource.
+  - from: Prices
+    to: Season
+    kind: has_many
+    via: seasons
+  - from: User
+    to: Place
+    kind: has_many
+    via: /api/v1/users/{user_id}/favorites
+    note: Favourites are a collection of full Place objects.
+  - from: User
+    to: Booking
+    kind: has_many
+    via: /api/v1/users/{user_id}/bookings
+    note: Requires an OAuth access token.
+  - from: Booking
+    to: Place
+    kind: belongs_to
+    via: place
+    note: Embedded place object.
+  - from: Booking
+    to: User
+    kind: belongs_to
+    via: host
+    note: Embedded user object.
+caveats:
+  - >-
+    Derived from a client library last released 2011-11-07 and marked unsupported
+    by its own maintainers. It describes v1. A v3 surface existed
+    (https://www.9flats.com/api/v3/places/) whose model is unknown.
+  - >-
+    Could not be validated against live responses: every 9flats host returns HTTP
+    403 behind a Cloudflare managed challenge (probed 2026-09-05).

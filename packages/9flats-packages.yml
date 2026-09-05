@@ -1,0 +1,58 @@
+generated: '2026-09-05'
+method: searched
+source: >-
+  https://rubygems.org/api/v1/gems/nineflats-api.json,
+  https://rubygems.org/api/v1/versions/nineflats-api.json,
+  https://github.com/9flats/nineflats-api
+description: >-
+  First-party 9flats client libraries. One official SDK was found: the Ruby gem
+  `nineflats-api`, published by 9flats to RubyGems and sourced from the company's
+  own GitHub organisation (https://github.com/9flats). No npm, PyPI, Packagist,
+  Maven Central, NuGet, crates.io or pkg.go.dev package for 9flats was found.
+  CURRENCY IS THE FINDING: the newest published version is 0.0.9, released
+  2011-11-07, and the repository's own README opens "This gem is no longer
+  supported and only usefull for v1" — the provider has explicitly withdrawn
+  support for the only client library it ships.
+packages:
+  - language: ruby
+    registry: rubygems
+    name: nineflats-api
+    url: https://rubygems.org/gems/nineflats-api
+    source: https://github.com/9flats/nineflats-api
+    install: gem install nineflats-api
+    official: true
+    version: 0.0.9
+    published: '2011-11-07'
+    downloads_total: 34799
+    yanked: false
+    wraps_api_version: v1
+    supported: false
+    note: >-
+      Read from https://rubygems.org/api/v1/gems/nineflats-api.json on 2026-09-05
+      (version_created_at 2011-11-07T10:04:25.360Z). Authors Lena Herrmann and
+      Thorsten Boettger; runtime dependency on the `oauth` gem (OAuth 1.0a). The
+      gem's `homepage_uri` still points at http://9flats.github.com/api_docs/index.html,
+      which now 404s — the documentation the SDK links to no longer exists. The
+      repository README directs anyone wanting to maintain it to api@9flats.com.
+      The gem is unyanked and still installable, so this is abandonment, not removal.
+registries_checked:
+  - registry: rubygems
+    query: https://rubygems.org/api/v1/search.json?query=9flats
+    status: 200
+    result: one package (nineflats-api)
+  - registry: npm
+    query: https://registry.npmjs.org/-/v1/search?text=9flats
+    status: 200
+    result: no first-party package
+  - registry: pypi
+    query: https://pypi.org/pypi/nineflats/json
+    status: 404
+    result: absent
+  - registry: github
+    query: https://api.github.com/orgs/9flats/repos
+    status: 200
+    result: >-
+      13 public repositories; nineflats-api is the only first-party client. The
+      other twelve are forks of third-party Ruby libraries (capybara-webkit,
+      icalendar, retire, master_slave_adapter, parse-cron, will_paypal, …) used
+      internally, not products, and are not recorded as SDKs.

@@ -1,23 +1,107 @@
 aid: 9flats
 name: 9flats
-description: '9flats is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: '9flats is a European vacation-rental marketplace, founded in Hamburg, Germany in 2010, that
+  lists privately-owned apartments, houses and rooms for short-term stays and takes bookings directly
+  from travellers. It operates 9flats.com in multiple languages and, in 2016, combined with its Berlin-based
+  competitor Wimdu. 9flats published a public read API (v1, later v3) covering place search, place detail,
+  photos, prices, reviews, availability calendars, user profiles, favourites and bookings, authenticated
+  with OAuth 1.0a and shipped with a first-party Ruby SDK. That developer surface has decayed: the SDK
+  was last released in 2011 and is marked unsupported by its own maintainers, and the API reference site
+  the SDK links to has been deleted.'
 url: https://raw.githubusercontent.com/api-evangelist/9flats/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
+x-tier: profiled
+x-tier-reason: 'enrichment pass 2026-09-05: first-party Ruby SDK, GitHub org and OAuth 1.0a auth model
+  found and captured; no machine-readable contract published and the live host is behind a Cloudflare
+  managed challenge'
 specificationVersion: '0.20'
 created: '2026-09-05'
 modified: '2026-09-05'
 tags:
 - Company
-apis: []
+- Travel
+- Hospitality
+- Vacation Rentals
+- Short-Term Rental
+- Accommodation
+- Marketplace
+- Booking
+- Europe
+apis:
+- aid: 9flats:9flats-api
+  name: 9flats API
+  description: 'The 9flats read API over the marketplace''s listing data: search places, fetch a place
+    with its photos, prices, reviews and monthly availability calendar, and fetch a user with their favourites
+    and (for the authenticated user) their bookings. Authenticated with OAuth 1.0a plus a client_id query
+    parameter; responses are JSON envelopes keyed by resource name with links[] rel/href navigation and
+    page-number pagination. Nine operations, all GET — no write surface is published. Reconstructed from
+    9flats'' own client library, because the reference site the library points at has been withdrawn.'
+  humanURL: https://github.com/9flats/nineflats-api
+  baseURL: https://www.9flats.com/api/v1
+  position: Producing
+  tags:
+  - Travel
+  - Vacation Rentals
+  - Search
+  - Listings
+  - Availability
+  - Reviews
+  - Bookings
+  properties:
+  - type: SourceCode
+    url: https://github.com/9flats/nineflats-api
+  - type: SDKs
+    url: packages/9flats-packages.yml
+  - type: Authentication
+    url: authentication/9flats-authentication.yml
+  - type: Conventions
+    url: conventions/9flats-conventions.yml
+  - type: DataModel
+    url: data-model/9flats-data-model.yml
+  - type: RateLimits
+    url: rate-limits/9flats-rate-limits.yml
+  x-status: Unverified as reachable. The documented base host answers HTTP 403 behind a Cloudflare managed
+    challenge to every non-browser client, so no operation could be called; the surface is described from
+    the provider's own SDK source, not from a live response.
+  x-contract: none published — no OpenAPI, AsyncAPI, GraphQL SDL, WSDL, .proto or Postman collection was
+    found
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DomainSecurity
+  url: security/9flats-domain-security.yml
 - type: Website
-  url: https://equityzen.com/company/9flats
+  url: https://www.9flats.com
+- type: GitHubOrganization
+  url: https://github.com/9flats
+- type: SourceCode
+  url: https://github.com/9flats/nineflats-api
+- type: Packages
+  url: packages/9flats-packages.yml
+- type: SDKs
+  url: packages/9flats-packages.yml
+- type: Authentication
+  url: authentication/9flats-authentication.yml
+- type: Conventions
+  url: conventions/9flats-conventions.yml
+- type: DataModel
+  url: data-model/9flats-data-model.yml
+- type: Conformance
+  url: conformance/9flats-conformance.yml
+- type: Lifecycle
+  url: lifecycle/9flats-lifecycle.yml
+- type: RateLimits
+  url: rate-limits/9flats-rate-limits.yml
+- type: Plans
+  url: plans/9flats-plans-pricing.yml
+- type: LLMsTxt
+  url: llms/9flats-llms.txt
+x-enrichment:
+  date: '2026-09-05'
+  status: enriched
+  artifacts_added: 11
+  pass: local-v3

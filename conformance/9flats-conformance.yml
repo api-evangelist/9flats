@@ -1,0 +1,90 @@
+generated: '2026-09-05'
+method: derived
+source: >-
+  https://github.com/9flats/nineflats-api (first-party SDK v0.0.9); probes of
+  https://www.9flats.com/.well-known/* on 2026-09-05.
+description: >-
+  Cross-cutting standards assertions for the 9flats API v1. Derived from the
+  provider's own client library, because no compliance page, trust centre or
+  documentation site is reachable. Every entry below is either shown by the code
+  or recorded as absent — nothing is claimed on the provider's behalf.
+conformance:
+  - id: oauth1
+    name: OAuth 1.0a (RFC 5849)
+    conforms: true
+    evidence: >-
+      github.com/9flats/nineflats-api — gemspec declares a runtime dependency on
+      the `oauth` gem; client.rb builds an ::OAuth::Consumer with
+      scheme: :header and implements the request-token / oauth_verifier /
+      access-token exchange.
+  - id: oauth2
+    name: OAuth 2.0 (RFC 6749)
+    conforms: false
+    evidence: >-
+      No token endpoint, scopes or refresh tokens anywhere in the SDK; the auth
+      model is OAuth 1.0a. /.well-known/oauth-authorization-server could not be
+      read (403, Cloudflare challenge).
+  - id: oidc
+    name: OpenID Connect
+    conforms: false
+    evidence: >-
+      /.well-known/openid-configuration returned 403 (edge challenge, not a
+      served document) on www.9flats.com, 9flats.com and api.9flats.com; the SDK
+      implements no ID-token handling.
+  - id: rfc9457
+    name: RFC 9457 Problem Details for HTTP APIs
+    conforms: false
+    evidence: >-
+      Errors are a bare {"error": <message>} body — requests.rb raises
+      Nineflats::Error.new(json["error"]). No application/problem+json, no type/
+      title/status/detail members.
+  - id: pagination
+    name: Paged collections
+    conforms: true
+    evidence: >-
+      Collection responses carry total_entries, total_pages, current_page and
+      per_page (default 9), plus links[] with rel self/full/next_page which the
+      SDK follows verbatim (paginated_array.rb, requests.rb).
+  - id: hypermedia-links
+    name: Link-relation navigation (rel/href objects)
+    conforms: true
+    evidence: >-
+      base.rb Base.object_link(name, array) selects from a links[] array of
+      {rel, href}; Place, Booking and collection responses all carry it. Not HAL,
+      JSON:API or Siren — a bespoke links[] convention.
+  - id: idempotency
+    name: Idempotency keys on writes
+    conforms: false
+    evidence: >-
+      No idempotency mechanism, and no write operations in the published surface —
+      all nine SDK operations are GET.
+  - id: json-api
+    name: JSON:API
+    conforms: false
+    evidence: Responses are ad-hoc envelopes keyed by resource name; no data/type/attributes shape.
+  - id: rfc9116
+    name: RFC 9116 security.txt
+    conforms: false
+    evidence: >-
+      /.well-known/security.txt returned 403 on every 9flats host (Cloudflare
+      managed challenge). Recorded as not-observed rather than confirmed absent.
+domain_standards:
+  checked: true
+  found: none
+  note: >-
+    Reward-only check, and 9flats earns nothing here — not a penalty. The travel
+    and short-term-rental market does have interchange standards (OTA/OpenTravel
+    messaging, HTNG, and the channel-manager XML dialects vacation-rental
+    distribution runs on), but the 9flats contract declares none of them: no
+    OpenTravel message types, no XML surface, no schema URNs. The API is a bespoke
+    JSON read API over its own listing model.
+caveats:
+  - >-
+    Derived from a client library the provider itself marks unsupported, last
+    released 2011-11-07. It describes v1 only.
+  - >-
+    No claim here was validated against live traffic — every 9flats host answers
+    403 behind a Cloudflare managed challenge.
+  - >-
+    No certifications, audit reports or compliance programme were found, so no
+    `Compliance` pointer is emitted.
