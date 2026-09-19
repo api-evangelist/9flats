@@ -47,6 +47,14 @@ apis:
   - Listings
   - Availability
   - Reviews
+  - Booking
+  tags_raw:
+  - Travel
+  - Vacation Rentals
+  - Search
+  - Listings
+  - Availability
+  - Reviews
   - Bookings
   properties:
   - type: SourceCode
