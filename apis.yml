@@ -15,6 +15,21 @@ x-tier: profiled
 x-tier-reason: 'enrichment pass 2026-09-05: first-party Ruby SDK, GitHub org and OAuth 1.0a auth model
   found and captured; no machine-readable contract published and the live host is behind a Cloudflare
   managed challenge'
+deliveryModel:
+  model: saas
+  license_evidence:
+    not_product:
+    - 9flats/nineflats-api
+  open_source: unknown
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: low
+  source:
+  - pricing
+  - repository-not-product
+  generated: '2026-09-25'
+  method: derived
 specificationVersion: '0.20'
 created: '2026-09-05'
 modified: '2026-09-05'
