@@ -64,5 +64,97 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-9flats is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://equityzen.com/company/9flats
+9flats is a European vacation-rental marketplace, founded in Hamburg, Germany in 2010, that lists privately-owned apartments, houses and rooms for short-term stays and takes bookings directly from travellers. It operates 9flats.com in multiple languages and, in 2016, combined with its Berlin-based competitor Wimdu. 9flats published a public read API (v1, later v3) covering place search, place detail, photos, prices, reviews, availability calendars, user profiles, favourites and bookings, authenticated with OAuth 1.0a and shipped with a first-party Ruby SDK. That developer surface has decayed: the SDK was last released in 2011 and is marked unsupported by its own maintainers, and the API reference site the SDK links to has been deleted.
+
+**Areas:** Company · Travel · Hospitality · Vacation Rentals · Short-Term Rental · Accommodation · Marketplace · Booking · Europe
+
+## 9flats on APIs.io
+
+Everything profiled for 9flats is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/9flats/](https://apis.io/providers/9flats/)** — or go straight to one of the APIs or properties below.
+
+### APIs (1)
+
+- [9flats API](https://apis.io/apis/9flats/9flats-api/) — The 9flats read API over the marketplace's listing data: search places, fetch a place with its photos, prices, reviews and monthly availability calendar,…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [9Flats Authentication](https://apis.io/security/9flats/9flats-authentication/)
+- [9Flats Domain Security](https://apis.io/security/9flats/9flats-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [9Flats Plans Pricing](https://apis.io/plans/9flats/9flats-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [9Flats Rate Limits](https://apis.io/rate-limits/9flats/9flats-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.9flats.com)
+- [GitHub](https://github.com/9flats)
+
+## API Evangelist rating
+
+**Kin Score 11.2** — emerging · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 62.5 |
+| Contract quality | 0.0 |
+| Contract governance | 4.5 |
+| Operational transparency | 2.6 |
+| Developer ergonomics | 19.0 |
+| Access clarity | 0.0 |
+
+**Agent readiness 5.0** — human-only
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 16.7** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/9flats/](https://apis.io/providers/9flats/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for 9flats: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/9flats/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
